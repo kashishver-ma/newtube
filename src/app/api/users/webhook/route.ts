@@ -5,13 +5,14 @@ import { db } from '@/db/index';
 import {users} from '@/db/schema';
 // import { users } from '@/db/schema';
 import { eq } from "drizzle-orm";
+import { error } from 'console';
 
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
 
   if (!SIGNING_SECRET) {
-    throw new Error('Error: Please add SIGNING_SECRET from Clerk Dashboard to .env or .env')
+    throw new Error("Error: Please add SIGNING_SECRET from Clerk Dashboard to .env or .env")
   }
 
   // Create new Svix instance with secret
@@ -24,11 +25,15 @@ export async function POST(req: Request) {
   const svix_signature = headerPayload.get('svix-signature')
 
   // If there are no headers, error out
-  if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response('Error: Missing Svix headers', {
-      status: 400,
-    })
-  }
+try
+  { if (!svix_id || !svix_timestamp || !svix_signature) {
+  return new Response('Error: Missing Svix headers', {
+    status: 400,
+  })}
+}
+catch (err){
+  throw new Error('Error: Missing Svix headers')
+}
 
   // Get body
   const payload = await req.json()
@@ -55,9 +60,10 @@ export async function POST(req: Request) {
   const { id } = evt.data
   const eventType = evt.type
   console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
-  console.log('Webhook payload:', body)
+  // console.log('Webhook payload:', body)
 
   const event = evt.type
+  try{
   if(eventType === 'user.created') {
       const {data} = evt
 
@@ -68,8 +74,12 @@ export async function POST(req: Request) {
         imageUrl: data.image_url,
   }).returning(); // Ensures data is sa
 }
+}catch (err) {
+  // console.error('Error: Could not insert user:', err)
+  throw new Error('Error: Could not insert user')
+}
 
-      if(eventType === 'user.deleted') {
+    try { if(eventType === 'user.deleted') {
            const {data} = evt
 
            if(!data.id) {
@@ -85,6 +95,8 @@ export async function POST(req: Request) {
             name: `${evt.data.first_name} ${evt.data.last_name}`,
             imageUrl: data.image_url,}).where(eq(users.clerkId, data.id) )
 
+      }}catch{
+        throw new Error('Error: Could not update user')
       }
 
   return new Response('Webhook received', { status: 200 })
