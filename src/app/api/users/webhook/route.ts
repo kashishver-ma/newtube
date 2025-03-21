@@ -1,7 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-import { db } from '@/db';
+import { db } from '@/db/index';
 import {users} from '@/db/schema';
 // import { users } from '@/db/schema';
 import { eq } from "drizzle-orm";
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
            if(!data.id) {
             return new Response('Error: Missing user ID', {status: 400});
            }
-           await db.delete(users).where(users.clerkId.eq(data.id))
+           await db.delete(users).where(eq(users.clerkId, data.id) )
       }
 
       if(eventType === 'user.updated') {
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
            
            await db.update(users).set({
             name: `${evt.data.first_name} ${evt.data.last_name}`,
-            imageurl: data.image_url,}).where(users.clerkId.eq(data.id))
+            imageUrl: data.image_url,}).where(eq(users.clerkId, data.id) )
 
       }
 
