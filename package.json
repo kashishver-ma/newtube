@@ -17,7 +17,12 @@
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@tanstack/react-query": "^5.69.0",
+    "@trpc/client": "^11.0.0",
+    "@trpc/react-query": "^11.0.0",
+    "@trpc/server": "^11.0.0",
     "class-variance-authority": "^0.7.1",
+    "client-only": "^0.0.1",
     "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.3",
@@ -25,8 +30,10 @@
     "next": "15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "server-only": "^0.0.1",
     "svix": "^1.62.0",
-    "tailwind-merge": "^3.0.2"
+    "tailwind-merge": "^3.0.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
