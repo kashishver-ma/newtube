@@ -4,3 +4,31 @@ render as u fect: faster
 
 early we wait to be fectched video.. 
 here it is used to pre fetchthings
+
+<--------------------trpc------------------------->
+
+trpc: end to end typpesafety..
+similar hooks(useQuery,use mutation) other hono /honopc procedures
+
+trpc: have in built hooks for query and mutation AND RELAVENT QUERY..
+trpc: v11 allows authenticated prefetching..
+in rest api and trpc api..
+(Client Usage	Requires fetching data using fetch, axios, or GraphQL clients	
+Uses function calls directly in TypeScript, no need for an API client)
+
+Normal API (REST/GraphQL): If you need a public API,
+ want flexibility in frontend choices, or require standard API documentation.
+
+tRPC: If you are building a TypeScript full-stack app (e.g., Next.js) 
+and want seamless type safety between frontend and backend.
+-typesafe api routes
+
+why prefetch:
+render as u fetch faster load timing..
+(client server fecting / prefetch fetching--fast)
+
+parallel loading of data
+leverage rcs as loaders
+
+
+
